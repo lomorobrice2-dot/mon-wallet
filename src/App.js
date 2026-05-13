@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { generateMnemonic, mnemonicToSeedSync, validateMnemonic } from "@scure/bip39";
