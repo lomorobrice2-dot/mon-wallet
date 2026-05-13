@@ -28,7 +28,7 @@ const root = HDKey.fromMasterSeed(seed);
 const ethNode = root.derive("m/44'/60'/0'/0/0");
 const ethWallet = new ethers.Wallet(ethers.hexlify(ethNode.privateKey));
 const btcNode = root.derive("m/84'/0'/0'/0/0");
-const adresseBtc = "bcq1" + base58.encode(btcNode.publicKey.slice(1,21));
+const adresseBtc = "bc1q" + Array.from(btcNode.publicKey.slice(1, 21)).map(b => b.toString(16).padStart(2, "0")).join("");
 const solNode = root.derive("m/44'/501'/0'/0'");
 const adresseSol = base58.encode(solNode.publicKey.slice(1));
 return {
