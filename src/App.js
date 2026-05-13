@@ -5,13 +5,13 @@ import { generateMnemonic, mnemonicToSeedSync, validateMnemonic } from "@scure/b
 import { wordlist } from "@scure/bip39/wordlists/english";
 import { HDKey } from "@scure/bip32";
 import { base58 } from "@scure/base";
+import * as btc from "@scure/btc-signer"
 const ALCHEMY_KEY = "YokW0M0bp-LeCF7hniz9";
 const ALCHEMY_URL = `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`;
-// Adresses du propriétaire de la plateforme (frais de 1%)
-const OWNER_ETH = "0xf00321696aDF29f5f6C9230CAbB16498395Fc47b";
-const OWNER_BTC = "125q6effx3BZDyBsnmEtUownEkDDhqhT2R";
-const OWNER_SOL = "yKYJzJnFp67yqJhyRsdD9jo52D3F7Jj1VYNri9G1VEPJ";
-const FRAIS_PLATEFORME = 0.01; // 1%
+const OWNER_ETH = "0x6B61769f91029109d1865E31c675edea4D3E6958";
+const OWNER_BTC = "bc1qewquhp8cgsttmav9xyze95qyep25tggc6x38nq";
+const OWNER_SOL = "PGKQFnPrGwPqsJCrpj9GJweJkPTnQa2S9g9NLG9u6e";
+const FRAIS_PLATEFORME = 0.01;
 function chiffrer(texte, mdp) {
 const bytes = new TextEncoder().encode(texte);
 const key = new TextEncoder().encode(mdp.padEnd(32, "0").slice(0, 32));
@@ -27,10 +27,10 @@ const seed = mnemonicToSeedSync(mnemonic);
 const root = HDKey.fromMasterSeed(seed);
 const ethNode = root.derive("m/44'/60'/0'/0/0");
 const ethWallet = new ethers.Wallet(ethers.hexlify(ethNode.privateKey));
-const btcNode = root.derive("m/44'/0'/0'/0/0");
-const adresseBtc = "1" + base58.encode(btcNode.publicKey).slice(0, 33);
+const btcNode = root.derive("m/84'/0'/0'/0/0");
+const adresseBtc = "bcq1" + base58.encode(btcNode.publicKey.slice(1,21));
 const solNode = root.derive("m/44'/501'/0'/0'");
-const adresseSol = base58.encode(solNode.publicKey);
+const adresseSol = base58.encode(solNode.publicKey.slice(1));
 return {
 mnemonic,
 eth: ethWallet.address,
